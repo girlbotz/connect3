@@ -1,17 +1,20 @@
 package com.sharonhau.connect3;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    boolean isYellow = true;
-    int [][] boardYellow = new int[3][3];
-    int [][] boardRed = new int[3][3];
-    int plays = 0;
+    boolean _isYellow = true;
+    int [][] _boardYellow = new int[3][3];
+    int [][] _boardRed = new int[3][3];
+    int _playCount = 0;
 
     public void onClick(View view) {
         ImageView currentView = (ImageView) view;
@@ -21,13 +24,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         int[][] currentBoard;
-        if (isYellow) {
-            currentBoard = boardYellow;
+        if (_isYellow) {
+            currentBoard = _boardYellow;
+            currentView.setImageResource(R.drawable.yellow);
         } else {
             currentView.setImageResource(R.drawable.red);
-            currentBoard = boardRed;
+            currentBoard = _boardRed;
         }
 
+        // Move the counter into the board
         view.setTranslationY(-1000f);
         view.setAlpha(1f);
         view.animate().translationYBy(1000f).setDuration(500);
@@ -39,13 +44,30 @@ public class MainActivity extends AppCompatActivity {
         currentBoard[col][row] = 1;
 
         if (checkWinning(currentBoard, col, row)) {
-            Toast.makeText(getApplicationContext(), (isYellow ? "Yellow" : "Red") + " WON!", Toast.LENGTH_SHORT).show();
-        } else if (plays == 8) {
-            Toast.makeText(getApplicationContext(), "Tie game", Toast.LENGTH_SHORT).show();
+            String winner;
+            int backgroundColor;
+            if (_isYellow) {
+                winner = "Yellow";
+                backgroundColor = Color.YELLOW;
+            } else {
+                winner = "Red";
+                backgroundColor = Color.RED;
+            }
+            displayMessage(winner + " WON!", backgroundColor);
+        } else if (_playCount == 8) {
+            displayMessage("Tie game", Color.LTGRAY);
         } else {
-            plays++;
-            isYellow = !isYellow;
+            _playCount++;
+            _isYellow = !_isYellow;
         }
+    }
+
+    private void displayMessage(String text, int backgroundColour) {
+        TextView winnerMessage = (TextView) findViewById(R.id.gameOver);
+        winnerMessage.setText(text);
+        LinearLayout layout = (LinearLayout)findViewById(R.id.gameOverLayout);
+        layout.setBackgroundColor(backgroundColour);
+        layout.setVisibility(View.VISIBLE);
     }
 
     private boolean checkWinning(int [][] board, int col, int row) {
@@ -75,6 +97,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return false;
+    }
+
+    public void resetGame(View view) {
+        _isYellow = true;
+        _boardYellow = new int[3][3];
+        _boardRed = new int[3][3];
+        _playCount = 0;
+
+        LinearLayout layout = (LinearLayout)findViewById(R.id.gameOverLayout);
+        layout.setVisibility(View.INVISIBLE);
+
+        // Hide all the counters
+        GridLayout board = (GridLayout)findViewById(R.id.boardLayout);
+        for (int i = 0; i< board.getChildCount(); i++) {
+            board.getChildAt(i).setAlpha(0f);
+        }
     }
 
     @Override

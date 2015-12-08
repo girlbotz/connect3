@@ -16,7 +16,8 @@
         android:layout_centerHorizontal="true"
         android:columnCount="3"
         android:rowCount="3"
-        android:background="@drawable/board">
+        android:background="@drawable/board"
+        android:id="@+id/boardLayout">
 
         <ImageView
             android:layout_width="90dp"
@@ -24,7 +25,6 @@
             android:id="@+id/imageView"
             android:layout_row="0"
             android:layout_column="0"
-            android:src="@drawable/yellow"
             android:layout_margin="10dp"
             android:layout_marginBottom="40dp"
             android:layout_marginRight="25dp"
@@ -37,7 +37,6 @@
             android:id="@+id/imageView2"
             android:layout_row="0"
             android:layout_column="1"
-            android:src="@drawable/yellow"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:onClick="onClick"
@@ -49,7 +48,6 @@
             android:id="@+id/imageView3"
             android:layout_row="0"
             android:layout_column="2"
-            android:src="@drawable/yellow"
             android:layout_marginTop="10dp"
             android:onClick="onClick"
             android:alpha="0"
@@ -60,7 +58,6 @@
             android:id="@+id/imageView4"
             android:layout_row="1"
             android:layout_column="0"
-            android:src="@drawable/yellow"
             android:layout_marginBottom="30dp"
             android:onClick="onClick"
             android:alpha="0"
@@ -71,7 +68,6 @@
             android:id="@+id/imageView5"
             android:layout_row="1"
             android:layout_column="1"
-            android:src="@drawable/yellow"
             android:onClick="onClick"
             android:alpha="0"
             android:tag="1/1"/>
@@ -81,7 +77,6 @@
             android:id="@+id/imageView6"
             android:layout_row="1"
             android:layout_column="2"
-            android:src="@drawable/yellow"
             android:onClick="onClick"
             android:alpha="0"
             android:tag="1/2"/>
@@ -91,7 +86,6 @@
             android:id="@+id/imageView7"
             android:layout_row="2"
             android:layout_column="0"
-            android:src="@drawable/yellow"
             android:onClick="onClick"
             android:alpha="0"
             android:tag="2/0"/>
@@ -101,7 +95,6 @@
             android:id="@+id/imageView8"
             android:layout_row="2"
             android:layout_column="1"
-            android:src="@drawable/yellow"
             android:onClick="onClick"
             android:alpha="0"
             android:tag="2/1"/>
@@ -111,11 +104,36 @@
             android:id="@+id/imageView9"
             android:layout_row="2"
             android:layout_column="2"
-            android:src="@drawable/yellow"
             android:onClick="onClick"
             android:alpha="0"
             android:tag="2/2"/>
     </GridLayout>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#f1f1f3"
+        android:padding="45dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/gameOverLayout"
+        android:visibility="invisible">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gameOver"
+            android:layout_gravity="center_horizontal"
+            android:textSize="25sp"
+            android:textColor="#474343" />
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Play Again!"
+            android:id="@+id/playAgainButton"
+            android:onClick="resetGame"
+            android:layout_weight="0.20" />
+    </LinearLayout>
 </RelativeLayout>
